@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
 import styles from './Home.module.css'
+
 import Navbar from '../../Components/Navbar/Navbar'
+import Footer from '../../Components/Footer/Footer'
+
+
 import { FaSearch, FaHeart, FaFootballBall, FaUsers, FaClock, FaPlusCircle } from 'react-icons/fa'
 import { FaUserFriends, FaShareAlt, FaCheckCircle, FaWhatsapp } from 'react-icons/fa'
 import { MdSpaceDashboard } from "react-icons/md";
 import { useEffect, useState } from 'react'
+import {
+    FaTrophy, FaChartLine, FaCalendarAlt, FaComments,
+    FaMedal, FaChartBar, FaRocket
+} from 'react-icons/fa';
+
 
 
 import camphome1 from '../../assets/img/img-camp1.jpg'
@@ -111,68 +120,6 @@ function Home() {
                 </div>
             </div>
 
-            <div className={styles.featuredContainer}>
-                <h2>Canchas Destacadas en Chincha Alta</h2>
-                <p>Encuentra las mejores canchas de fútbol cercanas a ti</p>
-
-                <div className={styles.fieldsGrid}>
-                    {[...Array(8)].map((_, index) => (
-                        <div key={index} className={styles.fieldCard}>
-                            <div className={styles.imageSection}>
-                                <img src={camphome1} alt={`Field ${index + 1}`} />
-                                <button className={styles.likeButton}>
-                                    <FaHeart />
-                                </button>
-                            </div>
-
-                            <div className={styles.fieldInfo}>
-                                <div className={styles.priceTag}>
-                                    <span className={styles.price}>S/.50</span>
-                                    <span className={styles.unit}> x hora</span>
-                                </div>
-
-                                <div className={styles.features}>
-                                    <div>
-                                        <MdSpaceDashboard /> 2 campos
-                                    </div>
-                                    <div>
-                                        <FaUsers /> 12 jugadores
-                                    </div>
-                                    <div>
-                                        <FaClock /> 10am - 10pm
-                                    </div>
-                                </div>
-
-                                <h3>Cancha La Victoria</h3>
-                                <span className={styles.fieldId}>ID: 08A2K2</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <button className={styles.searchButton2}>
-                    <FaSearch className={styles.searchIcon} />
-                    <span>Buscar Canchas</span>
-                </button>
-            </div>
-
-
-            <div className={styles.regionsContainer}>
-                <h2>Buscar por región</h2>
-                <p>Busca canchas por regiones del Perú</p>
-
-                <div className={styles.regionsGrid}>
-                    {departments.map((dept, index) => (
-                        <div key={index} className={styles.regionCard}>
-                            <div className={styles.regionImageContainer}>
-                                <img src={dept.image} alt={dept.name} />
-                            </div>
-                            <h3>{dept.name}</h3>
-                            <p>{dept.fields} canchas registradas</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
             <div className={styles.teamManagerContainer}>
                 <div className={styles.tmContent}>
                     <h2>Organiza tu pichanga como un pro</h2>
@@ -283,6 +230,148 @@ function Home() {
                     </div>
                 </div>
             </div >
+
+
+            <div className={styles.featuresSection}>
+                <div className={styles.featureContainer}>
+                    <div className={styles.featureIcon}>
+                        <FaTrophy />
+                        <div className={styles.iconBg}></div>
+                    </div>
+                    <h2>Sistema de Gamificación</h2>
+                    <p>Gana puntos por cada reserva, reseña o amigo invitado.
+                        Canjea tus puntos por descuentos exclusivos y beneficios premium.</p>
+                    <div className={styles.rewardsPreview}>
+                        <div className={styles.rewardItem}>
+                            <FaMedal />
+                            <span>+50 pts</span>
+                            <p>Por reserva</p>
+                        </div>
+                        <div className={styles.rewardItem}>
+                            <FaUsers />
+                            <span>+100 pts</span>
+                            <p>Por invitar</p>
+                        </div>
+                    </div>
+                    <button className={styles.ctaButton}>¡Empieza a ganar puntos!</button>
+                </div>
+
+                <div className={styles.featureContainer}>
+                    <div className={styles.featureIcon}>
+                        <FaChartLine />
+                        <div className={styles.iconBg}></div>
+                    </div>
+                    <h2>Estadísticas Deportivas</h2>
+                    <p>Registra tus logros, goles y asistencias.
+                        Construye tu perfil deportivo y comparte tus mejores momentos.</p>
+                    <div className={styles.statsPreview}>
+                        <div className={styles.statItem}>
+                            <span>Goles</span>
+                            <div className={styles.statBar} style={{ width: '80%' }}></div>
+                        </div>
+                        <div className={styles.statItem}>
+                            <span>Asistencias</span>
+                            <div className={styles.statBar} style={{ width: '65%' }}></div>
+                        </div>
+                    </div>
+                    <button className={styles.ctaButton}>¡Registra tus estadísticas!</button>
+                </div>
+
+                <div className={styles.featureContainer}>
+                    <div className={styles.featureIcon}>
+                        <FaCalendarAlt />
+                        <div className={styles.iconBg}></div>
+                    </div>
+                    <h2>Asistente de Torneos</h2>
+                    <p>Organiza torneos profesionales con fixtures automáticos,
+                        seguimiento de resultados y tabla de posiciones en tiempo real.</p>
+                    <div className={styles.tournamentPreview}>
+                        <div className={styles.bracket}></div>
+                    </div>
+                    <button className={styles.ctaButton}>¡Crea tu torneo ahora!</button>
+                </div>
+
+                <div className={styles.featureContainer}>
+                    <div className={styles.featureIcon}>
+                        <FaComments />
+                        <div className={styles.iconBg}></div>
+                    </div>
+                    <h2>Chat en Tiempo Real</h2>
+                    <p>Coordina con propietarios y equipos instantáneamente.
+                        Mensajería integrada para una comunicación fluida y efectiva.</p>
+                    <div className={styles.chatPreview}>
+                        <div className={styles.message}>¿La cancha está disponible?</div>
+                        <div className={styles.messageReply}>¡Sí! Te esperamos 👍</div>
+                    </div>
+                    <button className={styles.ctaButton}>¡Comienza a chatear!</button>
+                </div>
+            </div>
+
+
+
+            <div className={styles.featuredContainer}>
+                <h2>Canchas Destacadas en Chincha Alta</h2>
+                <p>Encuentra las mejores canchas de fútbol cercanas a ti</p>
+
+                <div className={styles.fieldsGrid}>
+                    {[...Array(8)].map((_, index) => (
+                        <div key={index} className={styles.fieldCard}>
+                            <div className={styles.imageSection}>
+                                <img src={camphome1} alt={`Field ${index + 1}`} />
+                                <button className={styles.likeButton}>
+                                    <FaHeart />
+                                </button>
+                            </div>
+
+                            <div className={styles.fieldInfo}>
+                                <div className={styles.priceTag}>
+                                    <span className={styles.price}>S/.50</span>
+                                    <span className={styles.unit}> x hora</span>
+                                </div>
+
+                                <div className={styles.features}>
+                                    <div>
+                                        <MdSpaceDashboard /> 2 campos
+                                    </div>
+                                    <div>
+                                        <FaUsers /> 12 jugadores
+                                    </div>
+                                    <div>
+                                        <FaClock /> 10am - 10pm
+                                    </div>
+                                </div>
+
+                                <h3>Cancha La Victoria</h3>
+                                <span className={styles.fieldId}>ID: 08A2K2</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <button className={styles.searchButton2}>
+                    <FaSearch className={styles.searchIcon} />
+                    <span>Buscar Canchas</span>
+                </button>
+            </div>
+
+
+            <div className={styles.regionsContainer}>
+                <h2>Buscar por región</h2>
+                <p>Busca canchas por regiones del Perú</p>
+
+                <div className={styles.regionsGrid}>
+                    {departments.map((dept, index) => (
+                        <div key={index} className={styles.regionCard}>
+                            <div className={styles.regionImageContainer}>
+                                <img src={dept.image} alt={dept.name} />
+                            </div>
+                            <h3>{dept.name}</h3>
+                            <p>{dept.fields} canchas registradas</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <Footer />
         </>
     )
 }

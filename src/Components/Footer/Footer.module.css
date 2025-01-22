@@ -1,0 +1,88 @@
+.footer {
+    background: #fff;
+    padding: 60px;
+    border-top: 1px solid #eee;
+  }
+  
+  .footerContent {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .leftSection .logo img {
+    height: 100px;
+  }
+  
+  .rightSection {
+    text-align: right;
+  }
+  
+  .footerNav {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .footerNav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .footerNav a:hover {
+    color: #43a047;
+  }
+  
+  .socialLinks {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+  }
+  
+  .socialLinks a {
+    color: #666;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .socialLinks a:hover {
+    color: #43a047;
+  }
+  
+  .companyInfo {
+    text-align: right;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      padding: 30px;
+    }
+  
+    .footerContent {
+      flex-direction: column;
+      gap: 30px;
+    }
+  
+    .rightSection {
+      text-align: left;
+    }
+  
+    .footerNav {
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    .socialLinks {
+      justify-content: flex-start;
+    }
+  
+    .companyInfo {
+      text-align: left;
+    }
+  }
