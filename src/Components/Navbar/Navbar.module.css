@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Montserrat&family=Outfit:wght@100..900&family=Tilt+Warp&display=swap');
+
+.navbar {
+  background: #ffffff;
+  height: 80px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  font-family: "Outfit", serif;
+}
+
+.navContainer {
+  max-width: 100%;
+  margin: 0px 60px;
+  padding: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.centerNav {
+  display: flex;
+  gap: 20px;
+}
+
+.rightNav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  font-family: "Outfit", serif;
+}
+
+.dropdownContent {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 8px 0;
+  min-width: 200px;
+}
+
+.dropdownContent button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdownContent button:hover {
+  background: #f5f5f5;
+}
+
+.dropdownContent hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.searchButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .rightNav {
+    gap: 8px;
+  }
+  
+  .rightNav button {
+    padding: 8px 6px;
+  }
+}
