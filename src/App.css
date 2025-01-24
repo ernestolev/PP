@@ -9,8 +9,11 @@
 
 #root {
   font-family: "Outfit", serif;
-  margin: 0 auto;
+  max-width: 1500px;
   text-align: center;
+}
+body{
+  margin: 0px;
 }
 
 .logo {

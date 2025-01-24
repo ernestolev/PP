@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
 import styles from './Home.module.css'
+import SearchModal from '../../Components/SearchModal/SearchModal'
+
+import PropTypes from 'prop-types'
 
 import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
+import MobileNav from '../../Components/Navbar/MobileNav'
 
 
 import { FaSearch, FaHeart, FaFootballBall, FaUsers, FaClock, FaPlusCircle } from 'react-icons/fa'
@@ -24,7 +28,7 @@ import benef1 from '../../assets/img/img-benf1.png'
 import benef2 from '../../assets/img/img-benf2.png'
 
 
-function Home() {
+function Home({ onSearch }) {
 
     const departments = [
         { name: 'Lima', image: camphome1, fields: 150 },
@@ -36,6 +40,12 @@ function Home() {
         { name: 'Ica', image: camphome1, fields: 30 },
         { name: 'Tacna', image: camphome2, fields: 25 },
     ];
+
+    const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+    const handleSearch = () => {
+        setIsSearchOpen(true)
+    }
 
     const [ballPosition, setBallPosition] = useState({ x: 0, y: 0 })
 
@@ -64,19 +74,25 @@ function Home() {
         }, 1000)
 
         return () => clearInterval(interval)
+
     }, [])
 
     return (
         <>
-            <Navbar />
+            <Navbar onSearch={() => setIsSearchOpen(true)} />
+            <SearchModal
+                isOpen={isSearchOpen}
+                onClose={() => setIsSearchOpen(false)}
+            />
             <div className={styles.homeContainer}>
                 <div className={styles.leftContent}>
                     <h1>Encuentra la cancha para tus pichangas</h1>
                     <p>Play place facilita el alquiler y ofrecimiento de canchas de fútbol.</p>
-                    <button className={styles.searchButton}>
-                        <FaSearch className={styles.searchIcon} />
+                    <button className={styles.searchButton} onClick={() => setIsSearchOpen(true)}>
+                    <FaSearch />
                         <span>Buscar Canchas</span>
-                    </button>                </div>
+                    </button>
+                </div>
                 <div className={styles.rightContent}>
                     <div className={styles.imageGrid}>
                         <div className={styles.leftImages}>
@@ -99,8 +115,8 @@ function Home() {
                         Compara precios, revisa la disponibilidad y
                         reserva al instante. Todo desde un solo lugar.
                     </p>
-                    <button className={styles.button3}>
-                        <FaSearch className={styles.searchIcon} />
+                    <button className={styles.searchButton} onClick={() => setIsSearchOpen(true)}>
+                    <FaSearch className={styles.searchIcon} />
                         <span>Buscar Cancha</span>
                     </button>
                 </div>
@@ -348,7 +364,7 @@ function Home() {
                     ))}
                 </div>
 
-                <button className={styles.searchButton2}>
+                <button className={styles.searchButton2} onClick={() => setIsSearchOpen(true)}>
                     <FaSearch className={styles.searchIcon} />
                     <span>Buscar Canchas</span>
                 </button>
@@ -371,9 +387,14 @@ function Home() {
                     ))}
                 </div>
             </div>
+            <MobileNav onSearch={handleSearch} />
             <Footer />
         </>
     )
+}
+
+Home.propTypes = {
+    onSearch: PropTypes.func.isRequired
 }
 
 export default Home
