@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaTimes, FaSearch } from 'react-icons/fa'
+import { FaTimes, FaSearch, FaUser, FaClipboard, FaHeart, FaHistory, FaMoon, FaSun, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import styles from './MobileMenu.module.css'
 import PropTypes from 'prop-types'
@@ -12,6 +12,9 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
     const [isRentOpen, setIsRentOpen] = React.useState(false)
     const [isOfferOpen, setIsOfferOpen] = React.useState(false)
     const { user, userData, logout } = useAuth()
+    const [isDarkMode, setIsDarkMode] = React.useState(false)
+
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(false)
 
     if (!isOpen) return null
 
@@ -28,20 +31,57 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
                 <div className={styles.menuBody}>
                     {user ? (
                         <div className={styles.userSection}>
-                            <div className={styles.userInfo}>
+                            <div
+                                className={styles.userInfo}
+                                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                            >
                                 <img
                                     src={user.photoURL || `https://ui-avatars.com/api/?name=${userData?.displayName}`}
                                     alt="Profile"
                                     className={styles.userAvatar}
                                 />
-                                <div>
+                                <div className={styles.userDetails}>
                                     <p>Bienvenido</p>
                                     <h4>{userData?.displayName}</h4>
                                 </div>
                             </div>
-                            <button className={styles.logoutButton} onClick={logout}>
-                                Cerrar sesión
-                            </button>
+
+                            {isProfileMenuOpen && (
+                                <div className={styles.profileMenu}>
+                                    <Link to="/profile" className={styles.profileMenuItem}>
+                                        <FaUser />
+                                        <span>Mi cuenta</span>
+                                    </Link>
+                                    <Link to="/mis-anuncios" className={styles.profileMenuItem}>
+                                        <FaClipboard />
+                                        <span>Mis anuncios</span>
+                                    </Link>
+                                    <Link to="/favoritos" className={styles.profileMenuItem}>
+                                        <FaHeart />
+                                        <span>Favoritos</span>
+                                    </Link>
+                                    <Link to="/recientes" className={styles.profileMenuItem}>
+                                        <FaHistory />
+                                        <span>Vistos recientemente</span>
+                                    </Link>
+                                    <div className={`${styles.profileMenuItem} ${styles.darkModeToggle}`}>
+                                        {isDarkMode ? <FaSun /> : <FaMoon />}
+                                        <span>Modo oscuro</span>
+                                        <label className={styles.switch}>
+                                            <input
+                                                type="checkbox"
+                                                checked={isDarkMode}
+                                                onChange={() => setIsDarkMode(!isDarkMode)}
+                                            />
+                                            <span className={styles.slider}></span>
+                                        </label>
+                                    </div>
+                                    <Link to="/ayuda" className={styles.profileMenuItem}>
+                                        <FaQuestionCircle />
+                                        <span>Ayuda</span>
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className={styles.authButtons}>
@@ -54,10 +94,6 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
                         </div>
                     )}
 
-                    <button className={styles.searchButton} onClick={onSearch}>
-                        <FaSearch />
-                        <span>Buscar</span>
-                    </button>
 
                     <div className={styles.menuSection}>
                         <button

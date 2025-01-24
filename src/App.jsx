@@ -6,6 +6,7 @@ import { ProtectedRoute } from '../src/Components/ProtectedRoute/ProtectedRoute'
 import Home from '../src/Pages/Home/Home'
 import Login from '../src/Pages/Login/Login'
 import Registro from '../src/Pages/Registro/Registro'
+import Ajustes from '../src/Pages/Ajustes/Ajustes'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
+          <Route path="/ajustes" element={<Ajustes />} />
 
 
           {/* Protected routes 

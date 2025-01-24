@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
-import { FaGlobe, FaSearch, FaUser, FaMoon, FaSun, FaHistory, FaQuestionCircle } from 'react-icons/fa'
+import { FaUser, FaClipboard, FaHeart, FaHistory, FaMoon, FaSun, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { useAuth } from '../../AuthContext'
+import { FaSearch, FaGlobe } from 'react-icons/fa'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../../firebase'
+
 
 import banneralq from '../../assets/img/img-Balquilar.png'
 import bannerrent from '../../assets/img/img-Brentar.png'
@@ -16,8 +20,21 @@ const Navbar = ({ onSearch }) => {
     const [isRentMenuOpen, setIsRentMenuOpen] = useState(false)
     const [isOfferMenuOpen, setIsOfferMenuOpen] = useState(false)
     const { user, userData, logout } = useAuth()
+    const [userInfo, setUserInfo] = useState(null)
 
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (user?.email) {
+                const docRef = doc(db, 'users-data', user.email)
+                const docSnap = await getDoc(docRef)
+                if (docSnap.exists()) {
+                    setUserInfo(docSnap.data())
+                }
+            }
+        }
+        fetchUserData()
+    }, [user])
 
 
     return (
@@ -86,16 +103,45 @@ const Navbar = ({ onSearch }) => {
                         )}
                     </div>
 
+                    <button
+                        className={styles.searchButton}
+                        onClick={() => {
+                            setIsSearchOpen(!isSearchOpen)
+                            onSearch()
+                        }}
+                    >
+                        <FaSearch />
+                        <span>Buscar</span>
+                    </button>
+
+                    <div className={styles.dropdown}>
+                        <button onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}>
+                            <FaGlobe />
+                            <span>ES</span>
+                            <MdKeyboardArrowDown />
+                        </button>
+                        {isLanguageMenuOpen && (
+                            <div className={styles.dropdownContent}>
+                                <button className={styles.menuItem}>
+                                    Español
+                                </button>
+                                <button className={styles.menuItem}>
+                                    English
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
                     <div className={styles.dropdown}>
                         <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
                             {user ? (
                                 <div className={styles.userInfo}>
                                     <img
-                                        src={user.photoURL || `https://ui-avatars.com/api/?name=${userData?.displayName}`}
+                                        src={user.photoURL || `https://ui-avatars.com/api/?name=${userInfo?.firstName}`}
                                         alt="Profile"
                                         className={styles.userAvatar}
                                     />
-                                    <span>{userData?.displayName}</span>
+                                    <span>{userInfo?.firstName} {userInfo?.lastName}</span> 
                                 </div>
                             ) : (
                                 <FaUser />
@@ -107,21 +153,46 @@ const Navbar = ({ onSearch }) => {
                                     <>
                                         <div className={styles.welcomeSection}>
                                             <p>Bienvenido</p>
-                                            <h4>{userData?.displayName}</h4>
+                                            <h4>{userInfo?.firstName} {userInfo?.lastName}</h4>
                                         </div>
                                         <div className={styles.menuSection}>
-                                            <Link to="/profile" className={styles.menuItem}>
+                                            <Link to="/Ajustes" className={styles.menuItem}>
                                                 <FaUser />
-                                                <span>Mi Perfil</span>
+                                                <span>Mi cuenta</span>
                                             </Link>
-                                            <button className={styles.menuItem}>
+                                            <Link to="/mis-anuncios" className={styles.menuItem}>
+                                                <FaClipboard />
+                                                <span>Mis anuncios</span>
+                                            </Link>
+                                            <Link to="/favoritos" className={styles.menuItem}>
+                                                <FaHeart />
+                                                <span>Favoritos</span>
+                                            </Link>
+                                            <Link to="/recientes" className={styles.menuItem}>
                                                 <FaHistory />
                                                 <span>Vistos recientemente</span>
-                                            </button>
+                                            </Link>
                                         </div>
                                         <div className={styles.menuSection}>
-                                            <button className={styles.logoutButton} onClick={logout}>
-                                                Cerrar sesión
+                                            <div className={`${styles.menuItem} ${styles.darkModeToggle}`}>
+                                                {isDarkMode ? <FaSun /> : <FaMoon />}
+                                                <span>Modo oscuro</span>
+                                                <label className={styles.switch}>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={isDarkMode}
+                                                        onChange={() => setIsDarkMode(!isDarkMode)}
+                                                    />
+                                                    <span className={styles.slider}></span>
+                                                </label>
+                                            </div>
+                                            <Link to="/ayuda" className={styles.menuItem}>
+                                                <FaQuestionCircle />
+                                                <span>Ayuda</span>
+                                            </Link>
+                                            <button className={styles.menuItem} onClick={logout}>
+                                                <FaSignOutAlt />
+                                                <span>Cerrar sesión</span>
                                             </button>
                                         </div>
                                     </>

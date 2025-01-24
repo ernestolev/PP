@@ -27,7 +27,7 @@ const Registro = () => {
             if (result?.user) {
                 // Only check users-data collection
                 const userDataDoc = await getDoc(doc(db, 'users-data', result.user.email))
-                
+
                 if (userDataDoc.exists()) {
                     setMessage('Esta cuenta ya está registrada')
                     await auth.signOut()
@@ -36,7 +36,7 @@ const Registro = () => {
                     }, 2000)
                     return
                 }
-    
+
                 // New user - proceed to step 2
                 setFormData(prev => ({
                     ...prev,
@@ -55,11 +55,8 @@ const Registro = () => {
             await auth.signOut()
         }
     }
-    
 
-
-    const [step, setStep] = useState(1)
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         userType: '',
         firstName: '',
         lastName: '',
@@ -74,8 +71,11 @@ const Registro = () => {
         dataPolicy: false,
         newsletter: false,
         googleAuth: false,
-        emailAuth: false // Add this field
-    })
+        emailAuth: false
+    }
+
+    const [step, setStep] = useState(1)
+    const [formData, setFormData] = useState(initialFormData)
 
     const [errors, setErrors] = useState({})
 
@@ -113,11 +113,57 @@ const Registro = () => {
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }))
+
+        // Real-time validation
+        const newErrors = { ...errors }
+
+        if (name === 'password') {
+            const passwordErrors = validatePassword(value)
+            if (passwordErrors.length > 0) {
+                newErrors.password = passwordErrors.join(', ')
+            } else {
+                delete newErrors.password
+            }
+
+            // Check confirm password match
+            if (formData.confirmPassword && value !== formData.confirmPassword) {
+                newErrors.confirmPassword = 'Las contraseñas no coinciden'
+            } else {
+                delete newErrors.confirmPassword
+            }
+        }
+
+        if (name === 'confirmPassword') {
+            if (value !== formData.password) {
+                newErrors.confirmPassword = 'Las contraseñas no coinciden'
+            } else {
+                delete newErrors.confirmPassword
+            }
+        }
+
+        if (name === 'email' && !emailRegex.test(value)) {
+            newErrors.email = 'Email inválido'
+        } else if (name === 'email') {
+            delete newErrors.email
+        }
+
+        setErrors(newErrors)
     }
+
+    const validatePassword = (password) => {
+        const errors = []
+        if (password.length < 8) errors.push('Mínimo 8 caracteres')
+        if (!/[A-Z]/.test(password)) errors.push('Al menos una mayúscula')
+        if (!/[a-z]/.test(password)) errors.push('Al menos una minúscula')
+        if (!/\d/.test(password)) errors.push('Al menos un número')
+        return errors
+    }
+
+    
 
     const handleSubmit = async () => {
         if (!validateForm()) return
-    
+
         try {
             let userData = {
                 firstName: formData.firstName,
@@ -134,7 +180,7 @@ const Registro = () => {
                 dataPolicy: formData.dataPolicy,
                 newsletter: formData.newsletter
             }
-    
+
             if (formData.googleAuth) {
                 userData.uid = formData.uid
             } else {
@@ -145,10 +191,10 @@ const Registro = () => {
                 )
                 userData.uid = userCredential.user.uid
             }
-    
+
             // Store only in users-data collection
             await setDoc(doc(db, 'users-data', formData.email), userData)
-    
+
             setMessage('Registro completado exitosamente')
             setTimeout(() => {
                 navigate('/')
@@ -197,129 +243,151 @@ const Registro = () => {
                 return (
                     <div className={styles.stepContent}>
                         <h3>Información personal</h3>
-                        <div className={styles.formGroup}>
-                            <input
-                                type="text"
-                                name="firstName"
-                                placeholder="Nombre"
-                                value={formData.firstName}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                name="lastName"
-                                placeholder="Apellido"
-                                value={formData.lastName}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Correo electrónico"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                disabled={formData.googleAuth}
-                                className={formData.googleAuth ? styles.disabledInput : ''}
-                            />
-                            <select
-                                name="region"
-                                value={formData.region}
-                                onChange={handleInputChange}
-                                className={styles.select}
-                            >
-                                <option value="">Selecciona tu región</option>
-                                {regiones.map(region => (
-                                    <option key={region} value={region}>{region}</option>
-                                ))}
-                            </select>
+                        <div className={styles.containerform}>
 
-                            <div className={styles.phoneInput}>
+
+                            <div className={styles.formGroup}>
                                 <input
                                     type="text"
-                                    name="countryCode"
-                                    value={formData.countryCode}
-                                    onChange={handleInputChange}
-                                    className={styles.countryCode}
-                                />
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    placeholder="Teléfono"
-                                    value={formData.phone}
+                                    name="firstName"
+                                    placeholder="Nombre"
+                                    value={formData.firstName}
                                     onChange={handleInputChange}
                                 />
-                            </div>
-
-                            <div className={styles.phoneInput}>
                                 <input
                                     type="text"
-                                    name="whatsappCode"
-                                    value={formData.whatsappCode}
+                                    name="lastName"
+                                    placeholder="Apellido"
+                                    value={formData.lastName}
                                     onChange={handleInputChange}
-                                    className={styles.countryCode}
                                 />
                                 <input
-                                    type="tel"
-                                    name="whatsapp"
-                                    placeholder="WhatsApp"
-                                    value={formData.whatsapp}
+                                    type="email"
+                                    name="email"
+                                    placeholder="Correo electrónico"
+                                    value={formData.email}
                                     onChange={handleInputChange}
+                                    disabled={formData.googleAuth}
+                                    className={formData.googleAuth ? styles.disabledInput : ''}
                                 />
+                                <select
+                                    name="region"
+                                    value={formData.region}
+                                    onChange={handleInputChange}
+                                    className={styles.select}
+                                >
+                                    <option value="">Selecciona tu región</option>
+                                    {regiones.map(region => (
+                                        <option key={region} value={region}>{region}</option>
+                                    ))}
+                                </select>
+
+                                <div className={styles.phoneInput}>
+                                    <input
+                                        type="text"
+                                        name="countryCode"
+                                        value={formData.countryCode}
+                                        onChange={handleInputChange}
+                                        className={styles.countryCode}
+                                    />
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        placeholder="Teléfono"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+
+                                <div className={styles.phoneInput}>
+                                    <input
+                                        type="text"
+                                        name="whatsappCode"
+                                        value={formData.whatsappCode}
+                                        onChange={handleInputChange}
+                                        className={styles.countryCode}
+                                    />
+                                    <input
+                                        type="tel"
+                                        name="whatsapp"
+                                        placeholder="WhatsApp"
+                                        value={formData.whatsapp}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                {!formData.googleAuth && formData.emailAuth && (
+                                    <>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            placeholder="Contraseña"
+                                            value={formData.password}
+                                            onChange={handleInputChange}
+                                        />
+                                        {errors.password && (
+                                            <span className={styles.error}>{errors.password}</span>
+                                        )}
+                                        <input
+                                            type="password"
+                                            name="confirmPassword"
+                                            placeholder="Confirmar contraseña"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                        />
+                                        {errors.confirmPassword && (
+                                            <span className={styles.error}>{errors.confirmPassword}</span>
+                                        )}
+                                    </>
+                                )}
                             </div>
-                            {!formData.googleAuth && formData.emailAuth && (
-                                <>
+                            <div className={styles.checkboxGroup}>
+                                <label className={styles.checkbox}>
                                     <input
-                                        type="password"
-                                        name="password"
-                                        placeholder="Contraseña"
-                                        value={formData.password}
+                                        type="checkbox"
+                                        name="dataPolicy"
+                                        checked={formData.dataPolicy}
                                         onChange={handleInputChange}
                                     />
-                                    {errors.password && (
-                                        <span className={styles.error}>{errors.password}</span>
-                                    )}
+                                    <span>He leído y acepto las condiciones de tratamiento de datos</span>
+                                </label>
+                                <label className={styles.checkbox}>
                                     <input
-                                        type="password"
-                                        name="confirmPassword"
-                                        placeholder="Confirmar contraseña"
-                                        value={formData.confirmPassword}
+                                        type="checkbox"
+                                        name="newsletter"
+                                        checked={formData.newsletter}
                                         onChange={handleInputChange}
                                     />
-                                    {errors.confirmPassword && (
-                                        <span className={styles.error}>{errors.confirmPassword}</span>
-                                    )}
-                                </>
-                            )}
+                                    <span>Deseo recibir noticias y ofertas por correo</span>
+                                </label>
+                            </div>
                         </div>
-                        <div className={styles.checkboxGroup}>
-                            <label className={styles.checkbox}>
-                                <input
-                                    type="checkbox"
-                                    name="dataPolicy"
-                                    checked={formData.dataPolicy}
-                                    onChange={handleInputChange}
-                                />
-                                <span>He leído y acepto las condiciones de tratamiento de datos</span>
-                            </label>
-                            <label className={styles.checkbox}>
-                                <input
-                                    type="checkbox"
-                                    name="newsletter"
-                                    checked={formData.newsletter}
-                                    onChange={handleInputChange}
-                                />
-                                <span>Deseo recibir noticias y ofertas por correo</span>
-                            </label>
-                        </div>
+
                         <div className={styles.buttonGroup}>
-                            <button className={styles.backButton} onClick={() => setStep(1)}>
+                            <button
+                                className={styles.backButton}
+                                onClick={() => {
+                                    setStep(1)
+                                    setFormData(initialFormData)
+                                    setErrors({})
+                                }}
+                            >
                                 Anterior
                             </button>
                             <button
                                 className={styles.nextButton}
                                 onClick={() => setStep(3)}
-                                disabled={!formData.firstName || !formData.lastName || !formData.region || !formData.phone ||
-                                    !formData.dataPolicy || (formData.emailAuth && (!formData.password || !formData.confirmPassword))}
+                                disabled={
+                                    !formData.firstName ||
+                                    !formData.lastName ||
+                                    !formData.region ||
+                                    !formData.phone ||
+                                    !formData.dataPolicy ||
+                                    (formData.emailAuth && (
+                                        !formData.password ||
+                                        !formData.confirmPassword ||
+                                        Object.keys(errors).length > 0
+                                    ))
+                                }
                             >
                                 Siguiente
                             </button>

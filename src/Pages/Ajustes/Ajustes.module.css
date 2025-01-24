@@ -1,0 +1,516 @@
+.settingsContainer {
+    min-height: 100vh;
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+.settingsWrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.backButton:hover {
+    color: #43a047;
+}
+
+.sidebar {
+    background: white;
+    border-right: 1px solid #eee;
+    padding: 24px;
+}
+
+.userHeader {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.userAvatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userType {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 4px 0 0;
+}
+
+.userInfo h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.userInfo p {
+    margin: 4px 0 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navButton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: none;
+    background: none;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.navButton:hover {
+    background: #f5f5f5;
+    color: #43a047;
+}
+
+.navButton.active {
+    background: #e8f5e9;
+    color: #43a047;
+    font-weight: 500;
+}
+
+.mainContent {
+    padding: 24px;
+    background: white;
+}
+
+.contentSection h2 {
+    margin: 0 0 24px;
+    color: #333;
+}
+
+.settingsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.settingsCard {
+    padding: 24px;
+    border-radius: 12px;
+    background: #f8f8f8;
+}
+
+.settingsCard h3 {
+    margin: 0 0 16px;
+    color: #333;
+}
+
+.settingsCard p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.editButton {
+    margin-top: 16px;
+    padding: 8px 16px;
+    border: none;
+    background: #43a047;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.editButton:hover {
+    background: #2e7d32;
+}
+
+.editForm {
+    padding: 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 500px;
+    margin: 0 30px;
+}
+
+.formColumn h3 {
+    margin: 24px 0 8px;
+    color: #333;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.imageUpload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.previewImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.uploadButton {
+    padding: 8px 16px;
+    background: #43a047;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.uploadButton:hover {
+    background: #2e7d32;
+    transform: translateY(-1px);
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.inputGroup label {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.inputGroup input {
+    font-family: 'Outfit';
+    width: 93%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.inputGroup input:focus {
+    outline: none;
+    border-color: #43a047;
+    box-shadow: 0 0 0 2px rgba(67, 160, 71, 0.1);
+}
+
+.disabledInput {
+    background-color: #f5f5f5 !important;
+    cursor: not-allowed;
+}
+
+.inputGroup input:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+}
+
+.cancelButton,
+.saveButton {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancelButton {
+    background: none;
+    border: 1px solid #ddd;
+    color: #666;
+}
+
+.cancelButton:hover {
+    background: #f5f5f5;
+}
+
+
+
+.saveButton:hover {
+    background: #2e7d32;
+}
+
+.saveButton:disabled {
+    background: #9e9e9e;
+    cursor: not-allowed;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.sectionHeader h2 {
+    margin: 0;
+}
+
+.editButton {
+    padding: 8px 16px;
+    background: #43a047;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.editButton:hover {
+    background: #2e7d32;
+    transform: translateY(-1px);
+}
+
+/* Social Media Section */
+.formGrid h3 {
+    grid-column: 1 / -1;
+    margin: 24px 0 16px;
+    color: #333;
+}
+
+.profileGrid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 32px;
+    margin-top: 24px;
+}
+
+.imageSection {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.confirmButton{
+    padding: 12px 24px;
+    background: #43a047;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.profileImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imageOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.imageOverlay span {
+    color: white;
+    font-weight: 500;
+}
+
+.imageWrapper:hover .imageOverlay {
+    opacity: 1;
+}
+
+.imageWrapper:hover .profileImage {
+    filter: blur(2px);
+}
+
+.formSection {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.socialSection {
+    border-top: 1px solid #eee;
+    padding-top: 24px;
+}
+
+
+
+.saveButton {
+    margin-top: 32px;
+    padding: 14px;
+    background: #43a047;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.saveButton:hover {
+    background: #2e7d32;
+}
+
+.saveButton:disabled {
+    background: #9e9e9e;
+    cursor: not-allowed;
+}
+
+.profileDisplay {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+
+.profileName h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.profileName p {
+    margin: 4px 0 0;
+    color: #666;
+}
+
+.infoSection {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+}
+
+.infoSection h3 {
+    margin: 0 0 16px;
+    color: #333;
+}
+
+.infoGrid,
+.socialGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.infoItem,
+.socialItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.socialItem a {
+    color: #43a047;
+    text-decoration: none;
+}
+
+.socialItem a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+    .settingsWrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .settingsContainer {
+        padding: 12px;
+    }
+}

@@ -245,8 +245,13 @@
 
 .error {
     color: #d32f2f;
-    font-size: 0.875rem;
-    margin-top: -8px;
+    font-size: 0.75rem;
+    margin: -8px 0 12px;
+    padding-left: 4px;
+}
+
+.input.error {
+    border-color: #d32f2f;
 }
 
 .submitButton {
@@ -480,21 +485,11 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 @media (max-width: 468px) {
     .formSection {
-        padding: 20px;
+        padding: 10px;
     }
 
     .formWrapper {
@@ -504,5 +499,20 @@
 
     .imageSection {
         display: none;
+    }
+
+    .checkbox span{
+        font-size: 0.7rem;
+    }
+
+    .checkbox {
+        margin-top: 10px;
+    }
+    .containerform{
+        height: 30vh;
+        overflow-y: auto;
+    }
+    .optionCard{
+        padding: 10px;
     }
 }

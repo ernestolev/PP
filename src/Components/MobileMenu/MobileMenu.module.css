@@ -5,9 +5,21 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: 998;
     font-family: 'Outfit' !important;
+    animation: fadeIn 0.3s ease;
 }
+.menuBody{
+    overflow-y: auto;
+    max-height: 400px;
+    
+}
+
+.menuBody a, .menuBody button{
+    align-items: flex-start !important;
+    flex-direction: row;
+}
+
 
 .menuContent {
     position: fixed;
@@ -19,6 +31,7 @@
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     font-family: 'Outfit';
+    overflow-y: auto;
 }
 
 .menuContent.open {
@@ -26,15 +39,20 @@
 }
 
 .menuHeader {
-    padding: 20px;
+    padding: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
 }
 
 .logo {
-    height: 50px;
+    height: 60px;
+    margin-left: 10px;
 }
 
 .closeButton {
@@ -49,23 +67,138 @@
     padding: 20px;
 }
 
+.userSection {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.userSection {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+
+.userInfo {
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+.userInfo:active {
+    background-color: #f5f5f5;
+}
+
+.profileMenu {
+    margin-top: 8px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    height: 200px;
+}
+
+.profileMenuItem:last-child {
+    border-bottom: none;
+}
+
+.profileMenuItem svg {
+    font-size: 20px;
+}
+
+.darkModeToggle {
+    justify-content: space-between;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #43a047;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.profileMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    color: #666;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+}
+
+.userAvatar {
+    height: 98px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.userInfo p {
+    
+    text-align: center !important;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.userInfo h4 {
+    
+    text-align: center !important;
+    margin: 4px 0 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
 .authButtons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
-    font-family: 'Outfit';
 }
 
 .loginButton, .registerButton {
-    padding: 12px;
-    border: none;
+    padding: 14px;
     border-radius: 8px;
-    font-weight: 800;
-    font-size: 1.1rem;
-    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s;
 }
-
 .loginButton {
     background: #43a047;
     color: white;
@@ -109,6 +242,14 @@
     font-family: 'Outfit';
 }
 
+.menuToggle svg {
+    transition: transform 0.3s;
+}
+
+.menuToggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
 .submenu {
     display: flex;
     flex-direction: column;
@@ -116,22 +257,34 @@
     text-align: left;
 }
 
+
 .submenu a {
-    padding: 12px;
+    display: block;
+    padding: 14px;
     color: #666;
     text-decoration: none;
-}
-.userInfo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 0.95rem;
+    transition: color 0.2s;
 }
 
-.userAvatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
+.submenu a:hover {
+    color: #43a047;
+}
+
+.logoutButton {
+    width: 100%;
+    padding: 14px;
+    color: #d32f2f;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.logoutButton:active {
+    background: #ffebee;
 }
 
 .welcomeSection {
@@ -150,17 +303,39 @@
     color: #333;
 }
 
+.userDetails{
+    font-family: 'outfit';
+    text-align: left;
+}
+
+.userDetails p{
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.userDetails h4{
+    font-size: 1.3rem;
+    margin: 0;
+}
+
 .logoutButton {
     width: 100%;
     padding: 12px;
+    background-color: #d32f2f;
     color: #d32f2f;
     background: none;
     border: none;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
     text-align: left;
+    font-family: 'outfit';
 }
 
 .logoutButton:hover {
     background: #ffebee;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
