@@ -160,15 +160,15 @@ const Navbar = ({ onSearch }) => {
                                                 <FaUser />
                                                 <span>Mi cuenta</span>
                                             </Link>
-                                            <Link to="/mis-anuncios" className={styles.menuItem}>
+                                            <Link to="/MisCanchas" className={styles.menuItem}>
                                                 <FaClipboard />
                                                 <span>Mis anuncios</span>
                                             </Link>
-                                            <Link to="/favoritos" className={styles.menuItem}>
+                                            <Link to="/Favoritos" className={styles.menuItem}>
                                                 <FaHeart />
                                                 <span>Favoritos</span>
                                             </Link>
-                                            <Link to="/recientes" className={styles.menuItem}>
+                                            <Link to="/VistosRecientemente" className={styles.menuItem}>
                                                 <FaHistory />
                                                 <span>Vistos recientemente</span>
                                             </Link>

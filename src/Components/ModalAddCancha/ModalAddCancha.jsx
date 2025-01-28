@@ -69,7 +69,7 @@ const ModalAddCancha = ({
     onSubmit,
     initialData = null,
     isEditing = false,
-    userRegion = '' // Add default value
+    userRegion = ''
 }) => {
 
     const VALID_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
@@ -77,9 +77,9 @@ const ModalAddCancha = ({
     const REGIONES_PERU = regionesPeru;
     const DISTRITOS_PERU = distritosPeru;
 
-    const [formData, setFormData] = useState(initialFormState)
-    const [loading, setLoading] = useState(false)
-    const [mapCenter, setMapCenter] = useState([-12.046374, -77.042793])
+    const [formData, setFormData] = useState(initialFormState);
+    const [loading, setLoading] = useState(false);
+    const [mapCenter, setMapCenter] = useState([-12.046374, -77.042793]);
 
     const preventKeyboardInput = (e) => {
         // Only Allow: tab, escape, enter and arrow keys
@@ -92,14 +92,15 @@ const ModalAddCancha = ({
         e.preventDefault();
     }
 
-    ModalAddCancha.propTypes = {
+    const propTypes = {
         isOpen: PropTypes.bool.isRequired,
         onClose: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
         initialData: PropTypes.object,
         isEditing: PropTypes.bool,
         userRegion: PropTypes.string
-    }
+    };
+    
 
 
     const handleImageCompress = async (file) => {
@@ -306,6 +307,45 @@ const ModalAddCancha = ({
         }
     };
 
+    const handleAddCancha = async (formData) => {
+        try {
+            // Simplify campos structure
+            const cleanData = {
+                nombre: formData.nombre,
+                estado: formData.estado,
+                numeroCampos: parseInt(formData.numeroCampos),
+                region: formData.region,
+                ciudad: formData.ciudad,
+                ubicacion: formData.ubicacion,
+                latitud: parseFloat(formData.latitud),
+                longitud: parseFloat(formData.longitud),
+                descripcion: formData.descripcion,
+                mapsLink: formData.mapsLink || '',
+                campos: formData.campos.map(campo => ({
+                    capacidad: Number(campo.capacidad),
+                    horaInicio: campo.horaInicio,
+                    horaFin: campo.horaFin,
+                    precioHora: Number(campo.precioHora),
+                    fotos: campo.fotos || []
+                })),
+                userId: user.email,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+    
+            const docRef = await addDoc(collection(db, 'canchas'), cleanData);
+            console.log('Document written with ID: ', docRef.id);
+            setShowAddModal(false);
+            await fetchCanchas();
+            return true;
+    
+        } catch (error) {
+            console.error('Error adding cancha:', error);
+            throw error;
+        }
+    };
+
+    ModalAddCancha.propTypes = propTypes;
 
 
 
@@ -585,7 +625,6 @@ const ModalAddCancha = ({
                                                 value={campo.precioHora}
                                                 onChange={(e) => handleCamposChange(index, 'precioHora', e.target.value)}
                                                 required
-                                                onKeyDown={preventKeyboardInput}
                                             />
                                         </div>
                                         <div className={styles.imageUploadSection}>
@@ -658,7 +697,6 @@ const ModalAddCancha = ({
 
     )
 }
-
 
 
 

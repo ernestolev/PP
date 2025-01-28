@@ -22,7 +22,7 @@
     text-align: left;
     color: #666;
     font-size: 1.1rem;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
 }
 
 .locationPrompt {
@@ -117,7 +117,7 @@
 
 .imageSection {
     position: relative;
-    height: 150px;
+    height: 200px;
 }
 
 .imageSection img {
@@ -143,7 +143,7 @@
 }
 
 .fieldInfo {
-    padding: 16px;
+    padding: 10px;
     text-align: left;
 }
 
@@ -192,8 +192,12 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 468px) {
     .fieldsGrid {
         grid-template-columns: 1fr;
+    }
+
+    .featuredContainer{
+        padding: 15px;
     }
 }

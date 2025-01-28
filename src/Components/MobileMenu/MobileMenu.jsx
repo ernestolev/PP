@@ -18,6 +18,16 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
 
     if (!isOpen) return null
 
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+            onClose()
+        } catch (error) {
+            console.error('Error logging out:', error)
+        }
+    }
+
     return (
         <div className={styles.menuOverlay}>
             <div className={`${styles.menuContent} ${isOpen ? styles.open : ''}`}>
@@ -27,6 +37,7 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
                         <FaTimes />
                     </button>
                 </div>
+                
 
                 <div className={styles.menuBody}>
                     {user ? (
@@ -42,25 +53,28 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
                                 />
                                 <div className={styles.userDetails}>
                                     <p>Bienvenido</p>
-                                    <h4>{userData?.displayName}</h4>
+                                    <div className={styles.userName}>
+                                        <h4>{userData?.displayName}</h4>
+                                        <MdKeyboardArrowDown className={`${styles.arrow} ${isProfileMenuOpen ? styles.arrowUp : ''}`} />
+                                    </div>
                                 </div>
                             </div>
 
                             {isProfileMenuOpen && (
                                 <div className={styles.profileMenu}>
-                                    <Link to="/profile" className={styles.profileMenuItem}>
+                                    <Link to="/ajustes" className={styles.profileMenuItem}>
                                         <FaUser />
                                         <span>Mi cuenta</span>
                                     </Link>
-                                    <Link to="/mis-anuncios" className={styles.profileMenuItem}>
+                                    <Link to="/MisCanchas" className={styles.profileMenuItem}>
                                         <FaClipboard />
                                         <span>Mis anuncios</span>
                                     </Link>
-                                    <Link to="/favoritos" className={styles.profileMenuItem}>
+                                    <Link to="/Favoritos" className={styles.profileMenuItem}>
                                         <FaHeart />
                                         <span>Favoritos</span>
                                     </Link>
-                                    <Link to="/recientes" className={styles.profileMenuItem}>
+                                    <Link to="/VistosRecientemente" className={styles.profileMenuItem}>
                                         <FaHistory />
                                         <span>Vistos recientemente</span>
                                     </Link>
@@ -131,6 +145,16 @@ const MobileMenu = ({ isOpen, onClose, onSearch }) => {
                         )}
                     </div>
                 </div>
+                {user && (
+                    <>
+                        <div className={styles.logoutSection}>
+                            <button onClick={handleLogout} className={styles.logoutButton}>
+                                <FaSignOutAlt />
+                                <span>Cerrar sesión</span>
+                            </button>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )

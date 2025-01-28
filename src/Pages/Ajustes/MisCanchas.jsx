@@ -45,7 +45,7 @@ import PasswordModal from '../../Components/PasswordModal/PasswordModal'
 
 
 const Ajustes = () => {
-    const [activeTab, setActiveTab] = useState('cuenta')
+    const [activeTab, setActiveTab] = useState('canchas')
     const { user, userData } = useAuth()
     const [previewImage, setPreviewImage] = useState(null)
     const [showImagePreview, setShowImagePreview] = useState(false)
@@ -426,193 +426,6 @@ const Ajustes = () => {
 
     const renderContent = () => {
         switch (activeTab) {
-            case 'cuenta':
-                return (
-                    <div className={styles.contentSection}>
-                        <h2>Información de la cuenta</h2>
-                        <div className={styles.profileGrid}>
-                            <div className={styles.imageSection}>
-                                <div className={styles.imageWrapper}>
-                                    <img
-                                        src={editForm.profileImage || user?.photoURL || `https://ui-avatars.com/api/?name=${editForm.firstName}`}
-                                        alt="Profile"
-                                        className={styles.profileImage}
-                                    />
-                                    <label htmlFor="imageUpload" className={styles.imageOverlay}>
-                                        <span>Cambiar foto</span>
-                                    </label>
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleImageSelect}
-                                        id="imageUpload"
-                                        hidden
-                                    />
-                                </div>
-                                {showImagePreview && (
-                                    <div className={styles.previewModal}>
-                                        <div className={styles.previewContent}>
-                                            <img
-                                                src={previewImage}
-                                                alt="Preview"
-                                                className={styles.previewImage}
-                                            />
-                                            <div className={styles.previewActions}>
-                                                <button
-                                                    onClick={handleCancelUpload}
-                                                    className={styles.cancelButton}
-                                                    disabled={loading}
-                                                >
-                                                    Cancelar
-                                                </button>
-                                                <button
-                                                    onClick={handleConfirmUpload}
-                                                    className={styles.confirmButton}
-                                                    disabled={loading}
-                                                >
-                                                    {loading ? 'Subiendo...' : 'Confirmar'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-
-                            <div className={styles.formSection}>
-                                <div className={styles.formColumn}>
-                                    <div className={styles.inputGroup}>
-                                        <label>Nombre</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.firstName}
-                                            disabled
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, firstName: e.target.value }))}
-                                            placeholder="Tu nombre"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Apellido</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.lastName}
-                                            disabled
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, lastName: e.target.value }))}
-                                            placeholder="Tu apellido"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Email</label>
-                                        <input
-                                            type="email"
-                                            value={editForm.email}
-                                            disabled
-                                            className={styles.disabledInput}
-                                        />
-                                    </div>
-                                    <div className={styles.passwordSection}>
-                                        <h3>Contraseña</h3>
-                                        {userData?.hasPassword && (
-                                            <div className={styles.passwordField}>
-                                                <input
-                                                    type={showPassword ? "text" : "password"}
-                                                    value="••••••••" readOnly
-                                                    className={styles.passwordInput}
-                                                />
-                                                <button
-                                                    className={styles.togglePassword}
-                                                    onClick={() => setShowPassword(!showPassword)}
-                                                    type="button"
-                                                >
-                                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                                </button>
-                                            </div>
-                                        )}
-                                        <button
-                                            className={styles.updatePasswordButton}
-                                            onClick={() => setShowPasswordModal(true)}
-                                        >
-                                            {userData?.hasPassword ? 'Actualizar contraseña' : 'Configurar contraseña'}
-                                        </button>
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Región</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.region}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, region: e.target.value }))}
-                                            placeholder="Tu región"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Código de país</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.countryCode}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, countryCode: e.target.value }))}
-                                            placeholder="+51"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Teléfono</label>
-                                        <input
-                                            type="tel"
-                                            value={editForm.phone}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
-                                            placeholder="Tu teléfono"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Código WhatsApp</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.whatsappCode}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, whatsappCode: e.target.value }))}
-                                            placeholder="+51"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>WhatsApp</label>
-                                        <input
-                                            type="tel"
-                                            value={editForm.whatsapp}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, whatsapp: e.target.value }))}
-                                            placeholder="Tu WhatsApp"
-                                        />
-                                    </div>
-
-                                    <h3>Redes Sociales</h3>
-                                    {['facebook', 'twitter', 'instagram', 'tiktok', 'youtube', 'linkedin'].map(network => (
-                                        <div className={styles.inputGroup} key={network}>
-                                            <label>{network.charAt(0).toUpperCase() + network.slice(1)}</label>
-                                            <input
-                                                type="url"
-                                                value={editForm[network]}
-                                                onChange={(e) => setEditForm(prev => ({ ...prev, [network]: e.target.value }))}
-                                                placeholder={`URL de ${network}`}
-                                            />
-                                        </div>
-                                    ))}
-
-                                    <button
-                                        className={styles.saveButton}
-                                        onClick={handleSaveChanges}
-                                        disabled={loading}
-                                    >
-                                        {loading ? 'Guardando cambios...' : 'Guardar cambios'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <PasswordModal
-                            isOpen={showPasswordModal}
-                            onClose={() => setShowPasswordModal(false)}
-                            onSubmit={handlePasswordUpdate}
-                            isUpdate={userData?.hasPassword}
-                        />
-                    </div>
-
-                )
             case 'canchas':
                 return (
                     <div className={styles.contentSection}>
@@ -741,37 +554,28 @@ const Ajustes = () => {
                                     <span>Configuración de cuenta</span>
                                 </button>
                             </Link>
-                            <Link to="/MisCanchas" className={styles.backButton}>
-                                <button
-                                    className={`${styles.navButton} ${activeTab === 'canchas' ? styles.active : ''}`}
-                                    onClick={() => setActiveTab('canchas')}
-                                >
-                                    <FaFutbol />
-                                    <span>Mis canchas</span>
-                                </button>
-                            </Link>
 
-                            <Link to="/Favoritos" className={styles.backButton}>
-                                <button
-                                    className={`${styles.navButton} ${activeTab === 'favoritos' ? styles.active : ''}`}
-                                    onClick={() => setActiveTab('favoritos')}
-                                >
-                                    <FaHeart />
-                                    <span>Canchas favoritas</span>
-                                </button>
-                            </Link>
-
-                            <Link to="/VistosRecientemente" className={styles.backButton}>
-                                <button
-                                    className={`${styles.navButton} ${activeTab === 'recientes' ? styles.active : ''}`}
-                                    onClick={() => setActiveTab('recientes')}
-                                >
-                                    <FaHistory />
-                                    <span>Vistos recientemente</span>
-                                </button>
-                            </Link>
-
-
+                            <button
+                                className={`${styles.navButton} ${activeTab === 'canchas' ? styles.active : ''}`}
+                                onClick={() => setActiveTab('canchas')}
+                            >
+                                <FaFutbol />
+                                <span>Mis canchas</span>
+                            </button>
+                            <button
+                                className={`${styles.navButton} ${activeTab === 'favoritos' ? styles.active : ''}`}
+                                onClick={() => setActiveTab('favoritos')}
+                            >
+                                <FaHeart />
+                                <span>Canchas favoritas</span>
+                            </button>
+                            <button
+                                className={`${styles.navButton} ${activeTab === 'recientes' ? styles.active : ''}`}
+                                onClick={() => setActiveTab('recientes')}
+                            >
+                                <FaHistory />
+                                <span>Vistos recientemente</span>
+                            </button>
                         </nav>
                     </aside>
 

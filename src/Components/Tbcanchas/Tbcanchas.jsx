@@ -54,18 +54,18 @@ const TbCanchas = ({ canchas, onAdd, onEdit, onDelete }) => {
                     <tbody>
                         {canchas?.map(cancha => (
                             <tr key={cancha.id}>
-                                <td>{cancha.id.substring(0, 8)}</td>
-                                <td>{formatDate(cancha.createdAt)}</td>
-                                <td>{cancha.nombre}</td>
-                                <td>
+                                <td data-label="ID">{cancha.id.substring(0, 8)}</td>
+                                <td data-label="Fecha">{formatDate(cancha.createdAt)}</td>
+                                <td data-label="Nombre">{cancha.nombre}</td>
+                                <td data-label="Estado">
                                     <span className={`${styles.status} ${styles[cancha.estado]}`}>
                                         {cancha.estado}
                                     </span>
                                 </td>
-                                <td>{cancha.region}</td>
-                                <td>{cancha.ubicacion}</td>
-                                <td>{cancha.numeroCampos}</td>
-                                <td className={styles.actions}>
+                                <td data-label="Región">{cancha.region}</td>
+                                <td data-label="Ubicación">{cancha.ubicacion}</td>
+                                <td data-label="N° Campos">{cancha.numeroCampos}</td>
+                                <td data-label="Acciones" className={styles.actions}>
                                     <button onClick={() => onEdit(cancha)}><FaPencilAlt /></button>
                                     <button onClick={() => onDelete(cancha.id)}><FaTrash /></button>
                                 </td>

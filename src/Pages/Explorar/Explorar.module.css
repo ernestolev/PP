@@ -1,7 +1,7 @@
 .explorarContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-top: 80px;
+    margin-top: 5.7%;
     height: 90.5vh;
     font-family: "Outfit", serif;
 }
@@ -15,7 +15,7 @@
 .listSection {
     background: #f8f9fa;
     overflow-y: auto;
-    padding: 24px;
+    padding: 14px;
 }
 .listSection > div:last-child {
     margin-top: auto;
@@ -127,6 +127,50 @@
     padding: 16px;
     text-align: left;
 }
+
+.filterNav {
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.sortButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+}
+
+.sortButton select {
+    border: none;
+    background: transparent;
+    color: #43a047;
+    font-weight: 500;
+    cursor: pointer;
+    padding-right: 12px;
+    font-family: 'outfit';
+}
+
+.filterButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid #43a047;
+    border-radius: 20px;
+    background: white;
+    color: #43a047;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filterButton:hover {
+    background: #43a047;
+    color: white;
+}
+
 .priceTag {
     margin-bottom: 12px;
 }
@@ -179,4 +223,346 @@
     text-align: center;
     padding: 40px;
     color: #666;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.filterSidebar {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.filterSidebar.show {
+    right: 0;
+}
+
+.filterHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.filterHeader h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.filterHeader button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.filterContent {
+    padding: 20px;
+}
+
+.filterSection {
+    margin-bottom: 24px;
+}
+
+.filterSection h4 {
+    text-align: left;
+    margin: 0 0 12px;
+    color: #333;
+}
+
+.priceRange {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.priceRange input {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'outfit';
+}
+
+.filterSection select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'outfit';
+    font-size: 14px;
+    color: #333;
+    background-color: white;
+}
+.filterSection select:focus {
+    outline: none;
+    border-color: #43a047;
+}
+
+.filterActions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.clearButton {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    font-family: 'outfit';
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.applyButton {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #43a047;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'outfit';
+    font-weight: 600;
+}
+
+.applyButton:hover {
+    background: #388e3c;
+}
+
+.distance {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.distance svg {
+    color: #43a047;
+}
+
+.mobileMapContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.mobileMapContainer.show {
+    transform: translateY(0);
+}
+
+.closeMapButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1001;
+    cursor: pointer;
+}
+
+.showMapButton {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 16px;
+    background: #43a047;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 24px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 999;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.showMapButton {
+    display: none;
+}
+
+.mapPopup {
+    width: 280px;
+    padding: 0;
+    margin: -13px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.mapPopup .imageSection {
+    position: relative;
+    height: 160px;
+}
+
+.mapPopup .imageSection img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 10px 0px 0px;
+    object-fit: cover;
+}
+
+.mapPopup  {
+    padding: 0px 12.5px;
+}
+
+.popupContent{
+    padding: 16px;
+}
+
+
+.mapPopup .priceTag {
+    margin-bottom: 8px;
+}
+
+.mapPopup .features {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+.mapPopup h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.mapPopup .location {
+    margin: 0 0 12px;
+    color: #666;
+    font-size: 14px;
+}
+
+.verButton {
+    width: 100%;
+    padding: 8px;
+    background: #43a047;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.verButton:hover {
+    background: #388e3c;
+}
+
+/* Override Leaflet's default popup styles */
+:global(.leaflet-popup-content-wrapper) {
+    padding: 0;
+    border-radius: 8px;
+}
+
+:global(.leaflet-popup-content) {
+    margin: 0;
+}
+
+:global(.leaflet-popup-close-button) {
+    right: 8px;
+    top: 8px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 468px) {
+    .explorarContainer {
+        grid-template-columns: 1fr;
+        margin: 10px 10px;
+    }
+
+    .likeButton {
+        display: none;
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .navdisplay{
+        display: none;
+    }
+
+    
+
+    .listSection {
+        padding: 0;
+    }
+
+    .canchasList {
+        grid-template-columns: 1fr;
+    }
+
+
+    .filterSidebar {
+        width: 100%;
+        right: -100%;
+    }
+
+    .filterSidebar.show {
+        right: 0;
+    }
+    .mapSection {
+        display: none;
+    }
+
+    .mobileMapContainer {
+        display: block;
+    }
+
+    .mobileMapContainer .mapSection {
+        display: block;
+        height: 100%;
+    }
+
+    .showMapButton {
+        display: flex;
+    }
 }

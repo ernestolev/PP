@@ -1,8 +1,7 @@
 .tableContainer {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 24px;
+    padding: 10px;
     overflow: hidden;
 }
 
@@ -33,10 +32,13 @@
     transform: translateY(-1px);
 }
 
+.tableWrapper {
+    overflow-x: auto;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 16px;
 }
 
 .table th {
@@ -106,15 +108,74 @@
     padding: 32px !important;
 }
 
-@media (max-width: 768px) {
-    .tableContainer {
-        padding: 16px;
+@media (max-width: 468px) {
+
+    .addButton{
+        justify-content: center;
     }
-    
-    .table {
+
+    h2{
+        font-size: 2rem;
+        margin-bottom: 14px !important;
+    }
+
+    .tableContainer {
+        padding: 0;
+    }
+    .table thead {
+        display: none;
+    }
+
+    .tableHeader{
+        align-items: stretch;
+        flex-direction: column;
+    }
+    .table, 
+    .table tbody, 
+    .table tr, 
+    .table td {
         display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 20px;
+        background: white;
+        padding: 0px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .table td {
+        text-align: right;
+        width: 92%;
+        padding: 10px;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    .table td:last-child {
+        border-bottom: none;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 4px 8px;
     }
 }
 

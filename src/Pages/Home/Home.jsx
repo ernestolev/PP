@@ -88,10 +88,12 @@ function Home({ onSearch }) {
                 <div className={styles.leftContent}>
                     <h1>Encuentra la cancha para tus pichangas</h1>
                     <p>Play place facilita el alquiler y ofrecimiento de canchas de fútbol.</p>
-                    <button className={styles.searchButton} onClick={() => setIsSearchOpen(true)}>
-                    <FaSearch />
-                        <span>Buscar Canchas</span>
-                    </button>
+                    <Link to="/explorar" className={styles.exploreLink}>
+                        <button className={styles.searchButton}>
+                            <FaRocket />
+                            <span>Explorar</span>
+                        </button>
+                    </Link>
                 </div>
                 <div className={styles.rightContent}>
                     <div className={styles.imageGrid}>
@@ -116,7 +118,7 @@ function Home({ onSearch }) {
                         reserva al instante. Todo desde un solo lugar.
                     </p>
                     <button className={styles.searchButton} onClick={() => setIsSearchOpen(true)}>
-                    <FaSearch className={styles.searchIcon} />
+                        <FaSearch className={styles.searchIcon} />
                         <span>Buscar Cancha</span>
                     </button>
                 </div>

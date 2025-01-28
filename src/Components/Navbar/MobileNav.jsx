@@ -44,7 +44,7 @@ const MobileNav = ({ onSearch }) => {
                 <FaSearch />
                 <span>Buscar</span>
             </button>
-            <Link to="/favoritos" className={styles.savedLink}>
+            <Link to="/Favoritos" className={styles.savedLink}>
                 <FaBookmark />
                 <span>Guardado</span>
             </Link>

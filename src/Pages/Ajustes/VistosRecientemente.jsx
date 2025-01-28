@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
@@ -44,8 +46,8 @@ import PasswordModal from '../../Components/PasswordModal/PasswordModal'
 
 
 
-const Ajustes = () => {
-    const [activeTab, setActiveTab] = useState('cuenta')
+const VistosRecientemente = () => {
+    const [activeTab, setActiveTab] = useState('VisotsRecientemente')
     const { user, userData } = useAuth()
     const [previewImage, setPreviewImage] = useState(null)
     const [showImagePreview, setShowImagePreview] = useState(false)
@@ -61,6 +63,47 @@ const Ajustes = () => {
         confirmPassword: ''
     });
     const [showPasswordModal, setShowPasswordModal] = useState(false);
+
+    const [recentCanchas, setRecentCanchas] = useState([]);
+
+    useEffect(() => {
+        const fetchRecentCanchas = async () => {
+            try {
+                // Get recently viewed from localStorage
+                const recentViewed = JSON.parse(
+                    localStorage.getItem(`recentViewed_${user?.email}`) || '[]'
+                );
+
+                // Sort by timestamp and get last 10
+                const sortedRecent = recentViewed
+                    .sort((a, b) => b.timestamp - a.timestamp)
+                    .slice(0, 10);
+
+                // Fetch cancha details
+                const canchasData = await Promise.all(
+                    sortedRecent.map(async (item) => {
+                        const canchaDoc = await getDoc(doc(db, 'canchas', item.id));
+                        if (canchaDoc.exists()) {
+                            return {
+                                id: canchaDoc.id,
+                                ...canchaDoc.data(),
+                                viewedAt: item.timestamp
+                            };
+                        }
+                        return null;
+                    })
+                );
+
+                setRecentCanchas(canchasData.filter(Boolean));
+            } catch (error) {
+                console.error('Error fetching recent canchas:', error);
+            }
+        };
+
+        if (user?.email) {
+            fetchRecentCanchas();
+        }
+    }, [user]);
 
 
     const handleAddCancha = async (formData) => {
@@ -192,15 +235,7 @@ const Ajustes = () => {
         fetchFavoriteCanchas();
     }, [user]);
 
-    const handleEditCancha = (cancha) => {
-        console.log('Editing cancha:', cancha); // Debug log
-        setSelectedCancha({
-            ...cancha,
-            id: cancha.id // Ensure ID is included
-        });
-        setIsEditing(true);
-        setShowAddModal(true);
-    };
+    
 
     const handleUpdateCancha = async (formData) => {
         try {
@@ -267,7 +302,6 @@ const Ajustes = () => {
         setIsSearchOpen(true)
     }
 
-    const [isEditing, setIsEditing] = useState(false)
     const [editForm, setEditForm] = useState({
         firstName: '',
         lastName: '',
@@ -346,307 +380,17 @@ const Ajustes = () => {
 
 
 
-    const handleImageSelect = async (e) => {
-        const file = e.target.files[0]
-        if (!file) return
-
-        try {
-            const options = {
-                maxSizeMB: 1,
-                maxWidthOrHeight: 1024,
-                useWebWorker: true
-            }
-
-            const compressedFile = await imageCompression(file, options)
-            setSelectedFile(compressedFile)
-
-            // Create preview URL
-            const previewUrl = URL.createObjectURL(compressedFile)
-            setPreviewImage(previewUrl)
-            setShowImagePreview(true)
-        } catch (error) {
-            console.error('Error compressing image:', error)
-        }
-    }
-
-
-    const handleConfirmUpload = async () => {
-        if (!selectedFile) return
-
-        try {
-            setLoading(true)
-            const storageRef = ref(storage, `profile-images/${user.email}`)
-            await uploadBytes(storageRef, selectedFile)
-            const imageUrl = await getDownloadURL(storageRef)
-
-            setEditForm(prev => ({
-                ...prev,
-                profileImage: imageUrl
-            }))
-
-            // Update in Firestore
-            const userRef = doc(db, 'users-data', user.email)
-            await updateDoc(userRef, {
-                profileImage: imageUrl
-            })
-
-            setShowImagePreview(false)
-            setPreviewImage(null)
-            setSelectedFile(null)
-        } catch (error) {
-            console.error('Error uploading image:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const handleCancelUpload = () => {
-        setShowImagePreview(false)
-        setPreviewImage(null)
-        setSelectedFile(null)
-    }
-
-    const handleSaveChanges = async () => {
-        try {
-            setLoading(true)
-            const userRef = doc(db, 'users-data', userData.email)
-            await updateDoc(userRef, {
-                ...editForm,
-                updatedAt: new Date()
-            })
-            setIsEditing(false)
-        } catch (error) {
-            console.error('Error updating profile:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-
-
     const renderContent = () => {
         switch (activeTab) {
-            case 'cuenta':
+           
+            
+            case 'VistosRecientemente':
                 return (
                     <div className={styles.contentSection}>
-                        <h2>Información de la cuenta</h2>
-                        <div className={styles.profileGrid}>
-                            <div className={styles.imageSection}>
-                                <div className={styles.imageWrapper}>
-                                    <img
-                                        src={editForm.profileImage || user?.photoURL || `https://ui-avatars.com/api/?name=${editForm.firstName}`}
-                                        alt="Profile"
-                                        className={styles.profileImage}
-                                    />
-                                    <label htmlFor="imageUpload" className={styles.imageOverlay}>
-                                        <span>Cambiar foto</span>
-                                    </label>
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleImageSelect}
-                                        id="imageUpload"
-                                        hidden
-                                    />
-                                </div>
-                                {showImagePreview && (
-                                    <div className={styles.previewModal}>
-                                        <div className={styles.previewContent}>
-                                            <img
-                                                src={previewImage}
-                                                alt="Preview"
-                                                className={styles.previewImage}
-                                            />
-                                            <div className={styles.previewActions}>
-                                                <button
-                                                    onClick={handleCancelUpload}
-                                                    className={styles.cancelButton}
-                                                    disabled={loading}
-                                                >
-                                                    Cancelar
-                                                </button>
-                                                <button
-                                                    onClick={handleConfirmUpload}
-                                                    className={styles.confirmButton}
-                                                    disabled={loading}
-                                                >
-                                                    {loading ? 'Subiendo...' : 'Confirmar'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-
-                            <div className={styles.formSection}>
-                                <div className={styles.formColumn}>
-                                    <div className={styles.inputGroup}>
-                                        <label>Nombre</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.firstName}
-                                            disabled
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, firstName: e.target.value }))}
-                                            placeholder="Tu nombre"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Apellido</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.lastName}
-                                            disabled
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, lastName: e.target.value }))}
-                                            placeholder="Tu apellido"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Email</label>
-                                        <input
-                                            type="email"
-                                            value={editForm.email}
-                                            disabled
-                                            className={styles.disabledInput}
-                                        />
-                                    </div>
-                                    <div className={styles.passwordSection}>
-                                        <h3>Contraseña</h3>
-                                        {userData?.hasPassword && (
-                                            <div className={styles.passwordField}>
-                                                <input
-                                                    type={showPassword ? "text" : "password"}
-                                                    value="••••••••" readOnly
-                                                    className={styles.passwordInput}
-                                                />
-                                                <button
-                                                    className={styles.togglePassword}
-                                                    onClick={() => setShowPassword(!showPassword)}
-                                                    type="button"
-                                                >
-                                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                                </button>
-                                            </div>
-                                        )}
-                                        <button
-                                            className={styles.updatePasswordButton}
-                                            onClick={() => setShowPasswordModal(true)}
-                                        >
-                                            {userData?.hasPassword ? 'Actualizar contraseña' : 'Configurar contraseña'}
-                                        </button>
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Región</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.region}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, region: e.target.value }))}
-                                            placeholder="Tu región"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Código de país</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.countryCode}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, countryCode: e.target.value }))}
-                                            placeholder="+51"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Teléfono</label>
-                                        <input
-                                            type="tel"
-                                            value={editForm.phone}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
-                                            placeholder="Tu teléfono"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>Código WhatsApp</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.whatsappCode}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, whatsappCode: e.target.value }))}
-                                            placeholder="+51"
-                                        />
-                                    </div>
-                                    <div className={styles.inputGroup}>
-                                        <label>WhatsApp</label>
-                                        <input
-                                            type="tel"
-                                            value={editForm.whatsapp}
-                                            onChange={(e) => setEditForm(prev => ({ ...prev, whatsapp: e.target.value }))}
-                                            placeholder="Tu WhatsApp"
-                                        />
-                                    </div>
-
-                                    <h3>Redes Sociales</h3>
-                                    {['facebook', 'twitter', 'instagram', 'tiktok', 'youtube', 'linkedin'].map(network => (
-                                        <div className={styles.inputGroup} key={network}>
-                                            <label>{network.charAt(0).toUpperCase() + network.slice(1)}</label>
-                                            <input
-                                                type="url"
-                                                value={editForm[network]}
-                                                onChange={(e) => setEditForm(prev => ({ ...prev, [network]: e.target.value }))}
-                                                placeholder={`URL de ${network}`}
-                                            />
-                                        </div>
-                                    ))}
-
-                                    <button
-                                        className={styles.saveButton}
-                                        onClick={handleSaveChanges}
-                                        disabled={loading}
-                                    >
-                                        {loading ? 'Guardando cambios...' : 'Guardar cambios'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <PasswordModal
-                            isOpen={showPasswordModal}
-                            onClose={() => setShowPasswordModal(false)}
-                            onSubmit={handlePasswordUpdate}
-                            isUpdate={userData?.hasPassword}
-                        />
-                    </div>
-
-                )
-            case 'canchas':
-                return (
-                    <div className={styles.contentSection}>
-                        <TbCanchas
-                            canchas={canchas}
-                            onAdd={() => {
-                                setShowAddModal(true)
-                                setSelectedCancha(null)
-                                setIsEditing(false)
-                            }}
-                            onEdit={handleEditCancha}
-                            onDelete={handleDeleteCancha}
-                        />
-                        <ModalAddCancha
-                            isOpen={showAddModal}
-                            onClose={() => {
-                                setShowAddModal(false);
-                                setSelectedCancha(null);
-                                setIsEditing(false);
-                            }}
-                            onSubmit={isEditing ? handleUpdateCancha : handleAddCancha}
-                            initialData={selectedCancha}
-                            isEditing={isEditing}
-                            userRegion={userData?.region || ''}
-                        />
-                    </div>
-                )
-            case 'favoritos':
-                return (
-                    <div className={styles.contentSection}>
-                        <h2>Mis Canchas Favoritas</h2>
-                        {favoriteCanchas.length > 0 ? (
+                        <h2>Vistos Recientemente</h2>
+                        {recentCanchas.length > 0 ? (
                             <div className={styles.fieldsGrid}>
-                                {favoriteCanchas.map((field) => {
+                                {recentCanchas.map((field) => {
                                     const firstCampo = field.campos?.[0] || {};
                                     return (
                                         <div key={field.id} className={styles.fieldCard}>
@@ -655,12 +399,12 @@ const Ajustes = () => {
                                                     src={firstCampo.fotos?.[0] || '/default-field.jpg'}
                                                     alt={field.nombre}
                                                     onError={(e) => {
-                                                        e.target.src = '/default-field.jpg'
+                                                        e.target.src = '/default-field.jpg';
                                                     }}
                                                 />
-                                                <button className={`${styles.likeButton} ${styles.liked}`}>
-                                                    <FaHeart />
-                                                </button>
+                                                <div className={styles.viewedTime}>
+                                                    {new Date(field.viewedAt).toLocaleDateString()}
+                                                </div>
                                             </div>
 
                                             <div className={styles.fieldInfo}>
@@ -692,9 +436,9 @@ const Ajustes = () => {
                             </div>
                         ) : (
                             <div className={styles.emptyState}>
-                                <FaHeart size={48} color="#ccc" />
-                                <h3>No tienes canchas favoritas</h3>
-                                <p>Las canchas que marques como favoritas aparecerán aquí</p>
+                                <FaHistory size={48} color="#ccc" />
+                                <h3>No hay campos vistos recientemente</h3>
+                                <p>Los campos que visites aparecerán aquí</p>
                             </div>
                         )}
                     </div>
@@ -786,4 +530,4 @@ const Ajustes = () => {
     )
 }
 
-export default Ajustes
+export default VistosRecientemente
