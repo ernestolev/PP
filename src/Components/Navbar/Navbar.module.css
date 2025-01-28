@@ -6,15 +6,14 @@
   width: 100%;
   position: fixed;
   top: 0;
-  right: 0;
   z-index: 999;
   font-family: "Outfit", serif;
 }
 
 .navContainer {
-  max-width: 100%;
-  margin: 0px 60px;
-  padding: 0 auto;
+  margin: auto;
+  max-width: 1500px;
+  padding: 0 60px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -93,6 +92,7 @@
   cursor: pointer;
   font-size: 1rem;
   transition: color 0.2s;
+  font-family: 'outfit';
 }
 
 .searchButton:hover {
@@ -218,12 +218,22 @@
   z-index: 1000;
 }
 
-.authButtons {
+.authSection {
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-bottom: 0px;
   border-bottom: 1px solid #eee;
+}
+
+.authButton {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.2s;
+  text-decoration: none;
 }
 
 .loginButton, .registerButton {

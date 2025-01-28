@@ -141,7 +141,7 @@ const Navbar = ({ onSearch }) => {
                                         alt="Profile"
                                         className={styles.userAvatar}
                                     />
-                                    <span>{userInfo?.firstName} {userInfo?.lastName}</span> 
+                                    <span>{userInfo?.firstName} {userInfo?.lastName}</span>
                                 </div>
                             ) : (
                                 <FaUser />
@@ -198,16 +198,26 @@ const Navbar = ({ onSearch }) => {
                                     </>
                                 ) : (
 
-                                    <div className={styles.menuSection}>
-                                        <button className={styles.menuItem} onClick={() => setIsDarkMode(!isDarkMode)}>
-                                            {isDarkMode ? <FaSun /> : <FaMoon />}
-                                            <span>{isDarkMode ? 'Modo claro' : 'Modo oscuro'}</span>
-                                        </button>
-                                        <button className={styles.menuItem}>
-                                            <FaQuestionCircle />
-                                            <span>Ayuda</span>
-                                        </button>
-                                    </div>
+                                    <>
+                                        <div className={styles.authSection}>
+                                            <Link to="/login" className={`${styles.authButton} ${styles.loginButton}`}>
+                                                Iniciar sesión
+                                            </Link>
+                                            <Link to="/registro" className={`${styles.authButton} ${styles.registerButton}`}>
+                                                Registrarme
+                                            </Link>
+                                        </div>
+                                        <div className={styles.menuSection}>
+                                            <button className={styles.menuItem} onClick={() => setIsDarkMode(!isDarkMode)}>
+                                                {isDarkMode ? <FaSun /> : <FaMoon />}
+                                                <span>{isDarkMode ? 'Modo claro' : 'Modo oscuro'}</span>
+                                            </button>
+                                            <Link to="/ayuda" className={styles.menuItem}>
+                                                <FaQuestionCircle />
+                                                <span>Ayuda</span>
+                                            </Link>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                         )}

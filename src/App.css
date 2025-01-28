@@ -9,7 +9,8 @@
 
 #root {
   font-family: "Outfit", serif;
-  max-width: 1500px;
+
+  margin: auto;
   text-align: center;
 }
 body{

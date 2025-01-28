@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
 import MobileNav from '../../Components/Navbar/MobileNav'
-
+import NearbyCanchas from '../../Components/NearbyCanchas/NearbyCanchas'
 
 import { FaSearch, FaHeart, FaFootballBall, FaUsers, FaClock, FaPlusCircle } from 'react-icons/fa'
 import { FaUserFriends, FaShareAlt, FaCheckCircle, FaWhatsapp } from 'react-icons/fa'
@@ -325,50 +325,7 @@ function Home({ onSearch }) {
 
 
 
-            <div className={styles.featuredContainer}>
-                <h2>Canchas Destacadas en Chincha Alta</h2>
-                <p>Encuentra las mejores canchas de fútbol cercanas a ti</p>
-
-                <div className={styles.fieldsGrid}>
-                    {[...Array(8)].map((_, index) => (
-                        <div key={index} className={styles.fieldCard}>
-                            <div className={styles.imageSection}>
-                                <img src={camphome1} alt={`Field ${index + 1}`} />
-                                <button className={styles.likeButton}>
-                                    <FaHeart />
-                                </button>
-                            </div>
-
-                            <div className={styles.fieldInfo}>
-                                <div className={styles.priceTag}>
-                                    <span className={styles.price}>S/.50</span>
-                                    <span className={styles.unit}> x hora</span>
-                                </div>
-
-                                <div className={styles.features}>
-                                    <div>
-                                        <MdSpaceDashboard /> 2 campos
-                                    </div>
-                                    <div>
-                                        <FaUsers /> 12 jugadores
-                                    </div>
-                                    <div>
-                                        <FaClock /> 10am - 10pm
-                                    </div>
-                                </div>
-
-                                <h3>Cancha La Victoria</h3>
-                                <span className={styles.fieldId}>ID: 08A2K2</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <button className={styles.searchButton2} onClick={() => setIsSearchOpen(true)}>
-                    <FaSearch className={styles.searchIcon} />
-                    <span>Buscar Canchas</span>
-                </button>
-            </div>
+            <NearbyCanchas maxDistance={50} />
 
 
             <div className={styles.regionsContainer}>

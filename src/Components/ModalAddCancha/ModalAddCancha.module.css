@@ -16,11 +16,11 @@
 
 .modalContent {
     background: white;
-    width: 50%;
+    width: 45%;
     max-width: 900px;
-    max-height: 90vh;
+    height: 94%;
     border-radius: 12px;
-    padding: 24px;
+    padding: 15px 8px;
     position: relative;
     animation: slideUp 0.3s ease;
 }
@@ -44,31 +44,50 @@
 .formGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin: 24px 0;
+    gap: 18px;
+    margin: 10px 0;
 }
 
 .formGroup {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
 }
 
 .formGroup label {
+    text-align: left;
     font-size: 0.9rem;
     color: #666;
     font-weight: 500;
 }
 
+.imageUploadSection {
+    text-align: left;
+    margin-top: 10px;
+}
+
 .formGroup input,
 .formGroup select,
 .formGroup textarea {
-    padding: 12px;
+    padding: 8px 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.2s;
+    font-family: 'Outfit';
+}
+
+.helpText {
+    text-align: left;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 4px;
+    display: block;
+}
+
+.formGroup input[type="number"]:invalid {
+    border-color: #dc3545;
 }
 
 .formGroup input:focus,
@@ -99,31 +118,32 @@
     }
 }
 .section {
-    margin-bottom: 32px;
-    padding: 24px;
+    margin-bottom: 12px;
+    padding: 14px;
     background: #f8f8f8;
     border-radius: 12px;
 }
 .formoverf{
     overflow-y: auto;
-    height: 65vh;
+    height: 81vh;
 }
 
 .section h3 {
-    margin: 0 0 20px;
+    text-align: left;
+    margin: 0 0 10px;
     color: #333;
     font-size: 1.1rem;
 }
 
 .campoCard {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 15px;
     margin-bottom: 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #0cbd3b;
 }
 
 .campoCard h4 {
+    text-align: left;
     margin: 0 0 16px;
     color: #43a047;
 }
@@ -153,6 +173,12 @@
     cursor: pointer;
     transition: all 0.2s;
     width: fit-content;
+}
+
+.modalContent h2{
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 13px;
 }
 
 .uploadButton:hover {
@@ -204,17 +230,19 @@
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    margin-top: 32px;
+    margin-top: 0px;
     padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
 .formActions button {
-    padding: 12px 24px;
+    padding: 12px 20px;
     border-radius: 6px;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: 'Outfit';
 }
 
 .formActions button[type="button"] {
@@ -234,12 +262,37 @@
     cursor: not-allowed;
 }
 
+.mapSection {
+    position: relative;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mapSection :global(.leaflet-control-layers) {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mapSection :global(.leaflet-control-layers-base) {
+    padding: 8px;
+}
+
+.mapSection :global(.leaflet-control-layers-toggle) {
+    width: 36px;
+    height: 36px;
+    background-size: 20px;
+}
+
 /* Add more specific input styles */
 input[type="time"] {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 1rem;
+    
+    font-family: 'Outfit';
 }
 
 textarea {
@@ -250,3 +303,4 @@ textarea {
 .coordsGroup input {
     text-align: right;
 }
+

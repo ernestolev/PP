@@ -1,0 +1,199 @@
+.featuredContainer {
+    padding: 40px 60px;
+    background: #f8f9fa;
+    max-width: 1500px;
+    margin: auto;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.featuredContainer h2 {
+    text-align: left;
+    font-size: 2.1rem;
+    margin-bottom: 16px;
+}
+
+.featuredContainer p {
+    text-align: left;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.locationPrompt {
+    margin: 24px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f6f9fc 0%, #ecf3f7 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.locationPromptContent {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.locationIcon {
+    width: 40px;
+    height: 40px;
+    fill: #2563eb;
+    flex-shrink: 0;
+}
+
+.locationText {
+    flex-grow: 1;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #43a047;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: spin 1s linear infinite;
+}
+
+
+.locationText h4 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+    color: #1e293b;
+}
+
+.locationText p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.enableLocation {
+    padding: 10px 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.enableLocation:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.fieldsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.fieldCard {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.fieldCard:hover {
+    transform: translateY(-4px);
+}
+
+.imageSection {
+    position: relative;
+    height: 150px;
+}
+
+.imageSection img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.likeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ff4757;
+}
+
+.fieldInfo {
+    padding: 16px;
+    text-align: left;
+}
+
+.priceTag {
+    margin-bottom: 12px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2ed573;
+}
+
+.unit {
+    color: #666;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.features div {
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.distance {
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem !important;
+}
+
+.noFields {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 0px;
+    color: #666;
+    font-size: 1.8rem !important;
+}
+
+
+@media (max-width: 768px) {
+    .fieldsGrid {
+        grid-template-columns: 1fr;
+    }
+}

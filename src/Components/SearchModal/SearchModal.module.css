@@ -101,6 +101,50 @@
     font-size: 14px;
 }
 
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.error {
+    color: #e53935;
+    text-align: center;
+    padding: 20px;
+}
+
+.suggestions {
+    padding: 16px;
+}
+
+.regionList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.regionTag {
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.regionTag:hover {
+    background: #c8e6c9;
+}
+
+.noResults {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
 kbd {
     background: #eee;
     border-radius: 4px;

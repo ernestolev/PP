@@ -1,0 +1,182 @@
+.explorarContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 80px;
+    height: 90.5vh;
+    font-family: "Outfit", serif;
+}
+
+.mapSection {
+    position: sticky;
+    top: 60px;
+    height: 100%;
+}
+
+.listSection {
+    background: #f8f9fa;
+    overflow-y: auto;
+    padding: 24px;
+}
+.listSection > div:last-child {
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.listHeader {
+    margin-bottom: 24px;
+}
+
+.listHeader h2 {
+    text-align: left;
+    font-size: 2rem;
+    margin: 0;
+    color: #333;
+}
+
+.canchasList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.circleMarker {
+    background-color: #43a047;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    width: 8px !important;
+    height: 8px !important;
+    transition: all 0.3s ease;
+}
+
+.circleMarker.highlighted {
+    border: 2px solid #1b00e3;
+    background-color: #1b00e3;
+    width: 10px !important;
+    height: 10px !important;
+    z-index: 1000 !important;
+}
+
+.canchaCard:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Add to existing styles */
+.selected .circleMarker {
+    background-color: #43a047;
+}
+
+.canchaCard {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.canchaCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.canchaCard.selected {
+    border: 2px solid #43a047;
+}
+
+.imageSection {
+    width: 100%;
+    height: 200px;
+}
+
+
+.imageSection img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.likeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.likeButton svg {
+    color: #999;
+    transition: all 0.3s ease;
+}
+
+.likeButton.liked {
+    background-color: #ff4757;
+}
+
+.likeButton.liked svg {
+    color: white;
+}
+
+.canchaInfo {
+    padding: 16px;
+    text-align: left;
+}
+.priceTag {
+    margin-bottom: 12px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2ed573;
+}
+
+.unit {
+    color: #666;
+
+}
+
+.results{
+    text-align: left;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 12px;
+    font-size: 0.7rem;
+    color: #666;
+}
+
+.features div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.popup {
+    text-align: center;
+}
+
+.popup h3 {
+    margin: 0;
+    color: #333;
+}
+
+.popup p {
+    margin: 4px 0 0;
+    color: #666;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
